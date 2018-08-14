@@ -7,7 +7,7 @@
     android:paddingBottom="0dp">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="119dp"
         android:background="@drawable/item_bg"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -2,32 +2,30 @@ package api.doll.gustavo.apiexercice
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Transformation
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var userAdapter:UserAdapter
+    lateinit var userAdapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-         setContentView(R.layout.activity_main)
-
-        userAdapter = UserAdapter()
+        setContentView(R.layout.activity_main)
+        userAdapter =  UserAdapter()
         list_user.adapter = userAdapter
 
+
+        /*Retrofit Response*/
 
         val retrofit:Retrofit = Retrofit.Builder()
                 .baseUrl("https://randomuser.me")
@@ -40,53 +38,36 @@ class MainActivity : AppCompatActivity() {
                 .unsubscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    userAdapter.setUser(it.results)},
-
-                        {
+                    userAdapter.setUser(it.results)
+                    loadHeaderData()
+                }, {
                    Log.e("FAIL",it.message)
                 })
 
 
 
     }
-    inner class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>(){
-
-        private val users:MutableList<Users> = mutableListOf()
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-          return UserViewHolder(layoutInflater.inflate(R.layout.user_item,parent,false))
-        }
-
-        override fun getItemCount(): Int {
-            return users.size
-        }
-
-        override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-            holder.bindModel(users[position])
-        }
-
-        fun setUser(results: List<Users>) {
-            users.addAll(results)
-            notifyDataSetChanged()
-
-            /*Load Header attributes*/
-            val headerTitle: TextView = header
-            val ImageHeader:ImageView = Imageheader
-            Picasso.get().load(users[0].picture.large).into(ImageHeader)
-            headerTitle.text = users[0].name.first
-        }
-
-        inner class UserViewHolder( itemView : View): RecyclerView.ViewHolder(itemView){
-            val nameTitle: TextView = itemView.findViewById(R.id.name_title)
-            val Image: ImageView = itemView.findViewById(R.id.thumb)
 
 
-                    fun bindModel(user:Users){
-                        nameTitle.text = user.name.first
-                        Picasso.get().load(user.picture.large).into(Image)
-                    }
-        }
+
+
+    /*Sorting the header User*/
+    val randomIndex  = Random()
+    fun sorting(from: Int, to: Int):Int{
+            return randomIndex.nextInt(to - from) + from
     }
+    fun loadHeaderData(){
+        /*Load Header attributes*/
+        val headerTitle: TextView = header
+        val ImageHeader: ImageView = Imageheader
+        val index:Int = sorting(0,userAdapter.users.size)
+        val headerMessage: TextView = message
+        Picasso.get().load(userAdapter.users[index].picture.large).into(ImageHeader)
+        headerTitle.text = userAdapter.users[index].name.first
+        headerMessage.text = "Parabéns você está na " + userAdapter.users.indexOf(userAdapter.users[index + 1]) + "º" + " posição, continue jogando para melhorar sua pontuação"
+    }
+
+
 
 
 }
