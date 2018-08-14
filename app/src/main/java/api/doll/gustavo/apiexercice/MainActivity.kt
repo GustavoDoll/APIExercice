@@ -68,17 +68,15 @@ class MainActivity : AppCompatActivity() {
         fun setUser(results: List<Users>) {
             users.addAll(results)
             notifyDataSetChanged()
+
+            /*Load Header attributes*/
             val headerTitle: TextView = header
+            val ImageHeader:ImageView = Imageheader
+            Picasso.get().load(users[0].picture.large).into(ImageHeader)
             headerTitle.text = users[0].name.first
-            
         }
 
-
         inner class UserViewHolder( itemView : View): RecyclerView.ViewHolder(itemView){
-
-
-
-
             val nameTitle: TextView = itemView.findViewById(R.id.name_title)
             val Image: ImageView = itemView.findViewById(R.id.thumb)
 
