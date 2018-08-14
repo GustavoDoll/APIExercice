@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             notifyDataSetChanged()
             val headerTitle: TextView = header
             headerTitle.text = users[0].name.first
+            
         }
 
 
