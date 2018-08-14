@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Transformation
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,6 +45,9 @@ class MainActivity : AppCompatActivity() {
                         {
                    Log.e("FAIL",it.message)
                 })
+
+
+
     }
     inner class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>(){
 
@@ -64,7 +68,8 @@ class MainActivity : AppCompatActivity() {
         fun setUser(results: List<Users>) {
             users.addAll(results)
             notifyDataSetChanged()
-
+            val headerTitle: TextView = header
+            headerTitle.text = users[0].name.first
         }
 
 
@@ -75,20 +80,14 @@ class MainActivity : AppCompatActivity() {
 
             val nameTitle: TextView = itemView.findViewById(R.id.name_title)
             val Image: ImageView = itemView.findViewById(R.id.thumb)
-            val headerTitle: TextView = header
+
 
                     fun bindModel(user:Users){
-
-
                         nameTitle.text = user.name.first
                         Picasso.get().load(user.picture.large).into(Image)
-
-//                        val firstElement = user.name.first?.first().toString()
-//                        Log.e("teste",firstElement)
-                       // headerTitle.text = firstElement.toString()
-
-
                     }
         }
     }
+
+
 }
