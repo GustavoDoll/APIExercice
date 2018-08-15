@@ -1,11 +1,13 @@
 package api.doll.gustavo.apiexercice
 
+import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.PicassoProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         userAdapter =  UserAdapter()
         list_user.adapter = userAdapter
+
 
 
         /*Retrofit Response*/
@@ -46,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
     }
 
 
@@ -56,15 +60,19 @@ class MainActivity : AppCompatActivity() {
     fun sorting(from: Int, to: Int):Int{
             return randomIndex.nextInt(to - from) + from
     }
+
     fun loadHeaderData(){
         /*Load Header attributes*/
         val headerTitle: TextView = header
         val ImageHeader: ImageView = Imageheader
         val index:Int = sorting(0,userAdapter.users.size)
         val headerMessage: TextView = message
-        Picasso.get().load(userAdapter.users[index].picture.large).into(ImageHeader)
+
+        Picasso.get().load(userAdapter.users[index].picture.large).transform(CircleTransformation()).into(ImageHeader)
+
+
         headerTitle.text = userAdapter.users[index].name.first
-        headerMessage.text = "Parabéns você está na " + userAdapter.users.indexOf(userAdapter.users[index + 1]) + "º" + " posição, continue jogando para melhorar sua pontuação"
+        headerMessage.text = "Parabéns você está na " + userAdapter.users.indexOf(userAdapter.users[index + 1]) + "º" + " posição"
     }
 
 
