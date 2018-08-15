@@ -1,13 +1,14 @@
-package api.doll.gustavo.apiexercice
+package api.doll.gustavo.apiexercice.Activity
 
-import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import api.doll.gustavo.apiexercice.API.APIInterface
+import api.doll.gustavo.apiexercice.Activity.Adapter.UserAdapter
+import api.doll.gustavo.apiexercice.R
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.PicassoProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        userAdapter =  UserAdapter()
+        userAdapter = UserAdapter()
         list_user.adapter = userAdapter
 
 

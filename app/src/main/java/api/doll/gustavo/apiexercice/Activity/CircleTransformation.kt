@@ -1,4 +1,4 @@
-package api.doll.gustavo.apiexercice
+package api.doll.gustavo.apiexercice.Activity
 
 import android.graphics.*
 import com.squareup.picasso.Transformation
