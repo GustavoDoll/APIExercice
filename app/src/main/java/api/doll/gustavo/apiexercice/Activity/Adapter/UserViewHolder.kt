@@ -1,6 +1,7 @@
 package api.doll.gustavo.apiexercice.Activity.Adapter
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,6 +16,7 @@ class UserViewHolder( itemView : View): RecyclerView.ViewHolder(itemView) {
     val nameTitle: TextView = itemView.findViewById(R.id.name_title)
     val Image: ImageView = itemView.findViewById(R.id.thumb)
     val Ranking_title:TextView = itemView.findViewById(R.id.ranking)
+    val ranking_number:TextView = itemView.findViewById(R.id.ranking_number)
     val ranking : Int = sorting(0,1000)
 
     fun bindModel(user: Users){
